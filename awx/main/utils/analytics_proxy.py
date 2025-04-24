@@ -102,8 +102,8 @@ class OIDCClient:
         self,
         client_id: str,
         client_secret: str,
-        token_url: str,
-        scopes: list[str],
+        token_url: str = DEFAULT_OIDC_TOKEN_ENDPOINT,
+        scopes: list[str] = ['api.console'],
         base_url: str = '',
     ) -> None:
         self.client_id: str = client_id

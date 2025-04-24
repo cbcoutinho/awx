@@ -22,7 +22,7 @@ from ansible_base.lib.utils.db import advisory_lock
 from awx.main.models import Job
 from awx.main.access import access_registry
 from awx.main.utils import get_awx_http_client_headers, set_environ, datetime_hook
-from awx.main.utils.analytics_proxy import OIDCClient, DEFAULT_OIDC_TOKEN_ENDPOINT
+from awx.main.utils.analytics_proxy import OIDCClient
 
 __all__ = ['register', 'gather', 'ship']
 
@@ -390,7 +390,7 @@ def ship(path):
         s.headers.pop('Content-Type')
         with set_environ(**settings.AWX_TASK_ENV):
             try:
-                client = OIDCClient(rh_id, rh_secret, DEFAULT_OIDC_TOKEN_ENDPOINT, ['api.console'])
+                client = OIDCClient(rh_id, rh_secret)
                 response = client.make_request("POST", url, headers=s.headers, files=files, verify=settings.INSIGHTS_CERT_PATH, timeout=(31, 31))
             except requests.RequestException:
                 logger.error("Automation Analytics API request failed, trying base auth method")

@@ -38,7 +38,7 @@ from django.utils.translation import gettext_lazy as _
 from awx_plugins.interfaces._temporary_private_licensing_api import detect_server_product_name
 
 from awx.main.constants import SUBSCRIPTION_USAGE_MODEL_UNIQUE_HOSTS
-from awx.main.utils.analytics_proxy import OIDCClient, DEFAULT_OIDC_TOKEN_ENDPOINT, TokenError
+from awx.main.utils.analytics_proxy import OIDCClient, TokenError
 
 MAX_INSTANCES = 9999999
 
@@ -244,7 +244,7 @@ class Licenser(object):
 
     def get_rhsm_subs(self, host, client_id, client_secret):
         try:
-            client = OIDCClient(client_id, client_secret, DEFAULT_OIDC_TOKEN_ENDPOINT, ['api.console'])
+            client = OIDCClient(client_id, client_secret)
             subs = client.make_request(
                 'GET',
                 host,
